@@ -20,6 +20,15 @@ export default class PostService {
         }
     }
 
+    public async update_post(post_params: IPost): Promise<void> {
+        try {
+            const query = { _id: post_params._id };
+            await posts.findOneAndUpdate(query, post_params);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async deletePost(_id: string): Promise<{ deletedCount: number }> {
         try {
             const query = { _id: _id };

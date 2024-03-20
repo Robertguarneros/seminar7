@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { IPost } from '../modules/posts/model';
 import PostService from '../modules/posts/service';
 import UserService from '../modules/users/service';
+import mongoose from 'mongoose';
 import e = require('express');
 
 export class PostController {
@@ -43,6 +44,39 @@ export class PostController {
                 return res.status(400).json({ error: 'Missing fields' });
             }
         }catch(error){
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+    public async updatePost(req: Request, res: Response) {
+        try {
+            if (req.params.id) {
+                const post_filter = { _id: req.params.id };
+                // Fetch user
+                const post_data = await this.post_service.filterPost(post_filter);
+                if(!post_data){
+                    return res.status(400).json({ error: 'User not found' });
+                }
+                const objectid = new mongoose.Types.ObjectId(req.params.id);
+                const post_params: IPost = {
+                    _id: objectid, 
+                    title: req.body.title || post_data.title,
+                    content: req.body.content || post_data.content,
+                    author: req.body.author || post_data.author
+                };
+                // Update user
+                await this.post_service.update_post(post_params);
+                //get new user data
+                const new_post_data = await this.post_service.filterPost(post_filter);
+                // Send success response
+                return res.status(200).json({ data: new_post_data, message: 'Successful'});
+            } else {
+                // Send error response if ID parameter is missing
+                return res.status(400).json({ error: 'Missing ID parameter' });
+            }
+        } catch (error) {
+            // Catch and handle any errors
+            console.error("Error updating:", error);
             return res.status(500).json({ error: 'Internal server error' });
         }
     }
