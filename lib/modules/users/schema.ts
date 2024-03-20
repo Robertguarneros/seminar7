@@ -8,8 +8,9 @@ const schema = new Schema({
     phone_number: {type:String,required:true},
     gender: {type:String,required:true},
     posts: [{ type: Schema.Types.ObjectId, ref: 'posts' }], // Array of ObjectIds referencing the Post model
-    reviews: [{ type: Schema.Types.ObjectId, ref: 'reviews' }] // Array of ObjectIds referencing the Post model
-    }
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'reviews' }], // Array of ObjectIds referencing the Post model
+    password: {type:String,required:true}
+}
 );
 
 export default mongoose.model('users', schema);

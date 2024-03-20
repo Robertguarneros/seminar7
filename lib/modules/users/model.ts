@@ -8,4 +8,5 @@ export interface IUser {
     gender: string;
     posts?: mongoose.Types.ObjectId[]; // Array to store post IDs
     reviews?: mongoose.Types.ObjectId[]; // Array to store post IDs
+    password: string;
 }

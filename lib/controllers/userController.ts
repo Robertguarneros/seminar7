@@ -10,12 +10,13 @@ export class UserController {
     public async create_user(req: Request, res: Response) {
         try{
             // this check whether all the filds were send through the request or not
-            if (req.body.name && req.body.email && req.body.phone_number && req.body.gender) {
+            if (req.body.name && req.body.email && req.body.phone_number && req.body.gender && req.body.password) {
                 const user_params: IUser = {
                     name: req.body.name,
                     email: req.body.email,
                     phone_number: req.body.phone_number,
                     gender: req.body.gender,
+                    password: req.body.password
                 };
                 const user_data = await this.user_service.register(user_params);
                 return res.status(201).json({ message: 'User created successfully', user: user_data });
@@ -23,7 +24,7 @@ export class UserController {
                 return res.status(400).json({ error: 'Missing fields' });
             }
         }catch(error){
-            return res.status(500).json({ error: 'Internal server error' });
+            return res.status(500).json({ error: 'Internal server error'});
         }
     }
 
@@ -60,6 +61,7 @@ export class UserController {
                     email: req.body.email || user_data.email,
                     phone_number: req.body.phone_number || user_data.phone_number,
                     gender: req.body.gender || user_data.gender,
+                    password: req.body.password || user_data.password
                 };
                 // Update user
                 await this.user_service.updateUser(user_params);
