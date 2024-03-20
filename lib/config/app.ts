@@ -16,11 +16,10 @@ class App {
    public mongoUrl: string = 'mongodb://localhost/' + environment.getDBName();
 
    private test_routes: TestRoutes = new TestRoutes();
+   private common_routes: CommonRoutes = new CommonRoutes();
    private user_routes: UserRoutes = new UserRoutes();
    private post_routes: PostRoutes = new PostRoutes();
    private review_routes: ReviewRoutes = new ReviewRoutes();
-   private common_routes: CommonRoutes = new CommonRoutes();
-
 
    constructor() {
       this.app = express();
@@ -32,7 +31,6 @@ class App {
       this.review_routes.route(this.app);
       this.common_routes.route(this.app);
       
-      
    }
 
    private config(): void {
@@ -42,7 +40,6 @@ class App {
       this.app.use(bodyParser.urlencoded({ extended: false }));
       // Enable CORS for all origins
       this.app.use(cors());
-      this.app.use(express.json());
    }
 
    private mongoSetup(): void {

@@ -8,15 +8,15 @@ export class ReviewRoutes {
     public route(app: Application) {
         
         app.post('/review', (req: Request, res: Response) => {
-            this.review_controller.create_review(req, res);
+            this.review_controller.createReview(req, res);
         });
 
         app.get('/review/:id', (req: Request, res: Response) => {
-            this.review_controller.get_review(req, res);
+            this.review_controller.getReview(req, res);
         });
 
         app.delete('/review/:id', (req: Request, res: Response) => {
-            this.review_controller.delete_review(req, res);
+            this.review_controller.deleteReview(req, res);
         });
 
     }

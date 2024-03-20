@@ -1,24 +1,21 @@
 import { IReview } from './model';
 import reviews from './schema';
-import { Types } from 'mongoose';
 
 export default class ReviewService {
     
-    public async createReview(reviews_params: IReview): Promise<IReview> {
+    public async createReview(review_params: IReview): Promise<IReview> {
         try {
-            const session = new reviews(reviews_params);
-            const result = await session.save();
-            // Convert _id to string
-            const newReview: IReview = { ...result.toObject(), _id: result._id.toString() };
-            return newReview;
+            const session = new reviews(review_params);
+            return await session.save();
         } catch (error) {
             throw error;
         }
     }
 
-    public async filterReview(query: any): Promise<IReview | null> {
+    public async filterReview(userId: any): Promise<IReview[]> {
         try {
-            return await reviews.findOne(query);
+            const query = { author: userId };
+            return await reviews.find(query);
         } catch (error) {
             throw error;
         }
@@ -32,7 +29,4 @@ export default class ReviewService {
             throw error;
         }
     }
-
-  
-
 }

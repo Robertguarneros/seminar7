@@ -1,9 +1,9 @@
 import * as mongoose from 'mongoose';
 
 export interface IReview {
-    _id?: String;
-    titulo: String;
-    contenido: String;
-    numEstrellas: Number;
-    autorRef: mongoose.Types.ObjectId; //id del autor
+    _id?: mongoose.Types.ObjectId; // Optional _id field
+    title: string;
+    content: string;
+    stars: number;
+    author: mongoose.Types.ObjectId; // Reference to the User collection
 }

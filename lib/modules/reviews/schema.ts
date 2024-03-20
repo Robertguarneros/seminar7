@@ -3,11 +3,10 @@ import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    titulo: String,
-    contenido: String,
-    numEstrellas: Number,
-    autorRef: [{type: Schema.Types.ObjectId, ref: 'users'}] //id del autor
-
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  stars: {type: Number, required: true},
+  author: { type: Schema.Types.ObjectId, ref: 'users', required: true } // Reference to the User model
 });
 
-export default mongoose.model('review', schema);
+export default mongoose.model('reviews', schema);
